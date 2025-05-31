@@ -99,42 +99,33 @@ Render will build and host your bot automatically.
 flowchart TB
     %% Configuration & Metadata
     subgraph "Configuration & Metadata"
-        ENV[".env"]:::config
-        Pkg["package.json"]:::config
-        Lock["package-lock.json"]:::config
-        RenderCfg["render.yaml"]:::config
+        ENV[.env]:::config
+        Pkg[package.json]:::config
+        Lock[package-lock.json]:::config
+        RenderCfg[render.yaml]:::config
     end
 
-    %% Bot Service (Node.js Process)
-    subgraph "Bot Service (Node.js Process)"
-        Index["index.js\n(Discord Client & Express Server)"]:::internal
-        Deploy["deploy-commands.js\n(Command Registry & Auto-Discovery Loader)"]:::internal
-        Commands["commands/utility/\n(Command Handlers)"]:::internal
+    %% Bot Service
+    subgraph "Bot Service (Nodejs Process)"
+        Index[index.js — Discord Client + Express]:::internal
+        Deploy[deploy-commands.js — Command Loader]:::internal
+        Commands[commands/utility — Slash Commands]:::internal
     end
 
     %% External Services
     subgraph "External Services"
-        DiscordAPI["Discord API\n(WebSocket & REST)"]:::external
-        Render["Render.com\n(Hosting Platform)"]:::external
+        DiscordAPI[Discord API — WebSocket and REST]:::external
+        Render[Render.com — Hosting]:::external
     end
 
     %% Data Flows
-    ENV -->|loads env vars| Index
-    ENV -->|loads env vars| Deploy
-    Index -->|loads modules| Commands
-    Deploy -->|discovers commands| Commands
-    Index -->|WS (Gateway)| DiscordAPI
-    Index -->|HTTPS REST (register commands)| DiscordAPI
-    Deploy -->|HTTPS REST (register commands)| DiscordAPI
-    Render -->|HTTP GET / (health check)| Index
-
-    %% Click Events
-    click Index "https://github.com/frosty-8/discord-bot/blob/main/index.js"
-    click Deploy "https://github.com/frosty-8/discord-bot/blob/main/deploy-commands.js"
-    click Commands "https://github.com/frosty-8/discord-bot/tree/main/commands/utility/"
-    click RenderCfg "https://github.com/frosty-8/discord-bot/blob/main/render.yaml"
-    click Pkg "https://github.com/frosty-8/discord-bot/blob/main/package.json"
-    click Lock "https://github.com/frosty-8/discord-bot/blob/main/package-lock.json"
+    ENV --> Index
+    ENV --> Deploy
+    Index --> Commands
+    Deploy --> Commands
+    Index --> DiscordAPI
+    Deploy --> DiscordAPI
+    Render --> Index
 
     %% Styles
     classDef internal fill:#D6EAF8,stroke:#1B4F72,color:#1B2631
