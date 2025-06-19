@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frosty-8 Discord Bot Documentation</title>
+    <style>
+        :root {
+            --primary: #5865F2;
+            --primary-dark: #4752C4;
+            --background: #1e1e2e;
+            --surface: #2a2a3a;
+            --text: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --accent: #57F287;
+            --error: #ED4245;
+            --warning: #FEE75C;
+            --code-bg: #2d2d3d;
+            --border: #3a3a4a;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--surface);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card {
+            background-color: var(--surface);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .command-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .command {
+            background-color: var(--surface);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .command:hover {
+            transform: translateX(5px);
+        }
+
+        .command-name {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .command-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            position: relative;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--accent);
+            color: #333;
+        }
+
+        .file-structure {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--surface);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .tech-item:hover {
+            transform: scale(1.05);
+        }
+
+        .tech-item img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .diagram-container {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .command-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide-up {
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="slide-up">
+        <div class="container">
+            <h1>Frosty-8 Discord Bot</h1>
+            <p>A modular Discord bot with slash commands and web interface built with Discord.js v14</p>
+            <div style="margin-top: 1rem;">
+                <span class="tag">Discord.js</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Express</span>
+                <span class="tag">Slash Commands</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="fade-in">
+            <div class="card">
+                <h2>📝 Project Overview</h2>
+                <p>Frosty-8 is a feature-rich Discord bot designed to provide utility and entertainment through slash commands. Built with a modular architecture, it's easy to extend with new commands and features.</p>
+                
+                <h3>Key Features</h3>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                    <li>Modular slash command system organized by categories</li>
+                    <li>Automatic command registration on startup</li>
+                    <li>Built-in web server for health checks and uptime monitoring</li>
+                    <li>Ready for deployment on Render with included configuration</li>
+                    <li>12 utility commands for various purposes</li>
+                    <li>Clean, maintainable code structure</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="fade-in">
+            <div class="card">
+                <h2>📁 Project Structure</h2>
+                <div class="file-structure">
+frosty-8-discord-bot/
+├── README.md
+├── deploy-commands.js
+├── index.js
+├── package.json
+├── render.yaml
+└── commands/
+    └── utility/
+        ├── 8ball.js
+        ├── define.js
+        ├── dice.js
+        ├── greet.js
+        ├── motivate.js
+        ├── ping.js
+        ├── predict.js
+        ├── remindme.js
+        ├── roast.js
+        ├── server.js
+        └── user.js
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in">
+            <div class="card">
+                <h2>⚙️ Available Commands</h2>
+                <div class="command-list">
+                    <div class="command slide-up" style="animation-delay: 0.1s">
+                        <div class="command-name">/8ball</div>
+                        <div class="command-desc">Ask the magic 8-ball a yes/no question</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.2s">
+                        <div class="command-name">/define</div>
+                        <div class="command-desc">Get simple word definitions</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.3s">
+                        <div class="command-name">/dice</div>
+                        <div class="command-desc">Roll a 6-sided dice</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.4s">
+                        <div class="command-name">/greet</div>
+                        <div class="command-desc">Greets the server user</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.5s">
+                        <div class="command-name">/motivate</div>
+                        <div class="command-desc">Receive a motivational quote</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.6s">
+                        <div class="command-name">/ping</div>
+                        <div class="command-desc">Check bot response time</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.7s">
+                        <div class="command-name">/predict</div>
+                        <div class="command-desc">Receive a mysterious prediction</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.8s">
+                        <div class="command-name">/remindme</div>
+                        <div class="command-desc">Set a short reminder</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 0.9s">
+                        <div class="command-name">/roast</div>
+                        <div class="command-desc">Gently roast a friend</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 1.0s">
+                        <div class="command-name">/server</div>
+                        <div class="command-desc">Display server information</div>
+                    </div>
+                    <div class="command slide-up" style="animation-delay: 1.1s">
+                        <div class="command-name">/user</div>
+                        <div class="command-desc">Display your user info</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in">
+            <div class="card">
+                <h2>🚀 Setup Instructions</h2>
+                <h3>1. Clone the Repository</h3>
+                <pre><code id="code1">git clone https://github.com/yourusername/discord-bot.git
+cd discord-bot</code><button class="copy-btn" onclick="copyCode('code1')">Copy</button></pre>
+
+                <h3>2. Install Dependencies</h3>
+                <pre><code id="code2">npm install</code><button class="copy-btn" onclick="copyCode('code2')">Copy</button></pre>
+
+                <h3>3. Configure Environment Variables</h3>
+                <p>Create a <code>.env</code> file with the following content:</p>
+                <pre><code id="code3">TOKEN=your_discord_bot_token
+CLIENTID=your_discord_application_client_id
+GUILDID=your_test_server_id
+PORT=3000</code><button class="copy-btn" onclick="copyCode('code3')">Copy</button></pre>
+
+                <h3>4. Run the Bot</h3>
+                <pre><code id="code4">node index.js</code><button class="copy-btn" onclick="copyCode('code4')">Copy</button></pre>
+            </div>
+        </section>
+
+        <section class="fade-in">
+            <div class="card">
+                <h2>🌐 Deployment to Render</h2>
+                <p>The project includes a <code>render.yaml</code> configuration file for easy deployment to Render:</p>
+                <pre><code id="code5">services:
+  - type: web
+    name: discord-bot
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
+    autoDeploy: true
+    envVars:
+      - key: TOKEN
+        sync: false
+      - key: CLIENTID
+        sync: false
+      - key: GUILDID
+        sync: false</code><button class="copy-btn" onclick="copyCode('code5')">Copy</button></pre>
+                
+                <h3>Deployment Steps</h3>
+                <ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                    <li>Push your code to a GitHub repository</li>
+                    <li>Create a new Web Service on Render.com</li>
+                    <li>Link your GitHub repository</li>
+                    <li>Add the required environment variables (TOKEN, CLIENTID, GUILDID)</li>
+                    <li>Render will automatically build and deploy your bot</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="fade-in">
+            <div class="card">
+                <h2>🧩 Example Command Code</h2>
+                <p>Here's an example of a command module (8ball.js):</p>
+                <pre><code id="code6">// 8ball.js
+const { SlashCommandBuilder } = require('discord.js');
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName('8ball')
+        .setDescription('Ask the magic 8-ball a yes/no question')
+        .addStringOption(option =>
+            option.setName('question')
+                .setDescription('Your yes/no question')
+                .setRequired(true)),
+    async execute(interaction) {
+        const responses = [
+            'Yes', 'No', 'Definitely', 'Absolutely not', 'Ask again later',
+            'It is certain', 'I have my doubts', 'Not in a million years', 'You bet!', 'No chance'
+        ];
+        const question = interaction.options.getString('question');
+        const reply = responses[Math.floor(Math.random() * responses.length)];
+        await interaction.reply(`🎱 **Question:** ${question}\n**Answer:** ${reply}`);
+    },
+};</code><button class="copy-btn" onclick="copyCode('code6')">Copy</button></pre>
+            </div>
+        </section>
+
+        <section class="fade-in">
+            <div class="card">
+                <h2>🛠️ Technology Stack</h2>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+                        <span>Node.js</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/discordjs/discordjs-original.svg" alt="Discord.js">
+                        <span>Discord.js v14</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express">
+                        <span>Express</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Render_logo.svg" alt="Render" style="width: 20px; height: 20px;">
+                        <span>Render</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fade-in">
+            <div class="card">
+                <h2>📜 License</h2>
+                <p>This project is licensed under the ISC License.</p>
+                <p>© 2025 - Created with ❤️ for learning and fun Discord automation.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="fade-in">
+        <div class="container">
+            <p>Frosty-8 Discord Bot Documentation</p>
+        </div>
+    </footer>
+
+    <script>
+        // Copy code functionality
+        function copyCode(id) {
+            const codeElement = document.getElementById(id);
+            const code = codeElement.textContent;
+            const button = codeElement.nextElementSibling;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Add animation classes as elements come into view
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
